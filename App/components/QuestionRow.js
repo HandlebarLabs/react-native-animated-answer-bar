@@ -9,7 +9,7 @@ const getAnswerRowStyles = answered => {
   return s;
 };
 
-const getOverlayStyles = (isCorrectAnswer, wasUserAnswer, answered) => {
+const getOverlayStyles = (isCorrectAnswer, wasUserAnswer) => {
   const s = [styles.answerBar];
   if (isCorrectAnswer) {
     s.push(styles.answerBarCorrect);
@@ -17,10 +17,6 @@ const getOverlayStyles = (isCorrectAnswer, wasUserAnswer, answered) => {
     s.push(styles.answerBarWrong);
   } else {
     s.push(styles.answerBarNeutral);
-  }
-
-  if (answered) {
-    s.push({ width: 100 });
   }
 
   return s;
@@ -38,11 +34,22 @@ export default class QuestionRow extends React.Component {
     isCorrectAnswer: false
   };
 
+  state = {
+    width: 0
+  };
+
+  handleOnLayout = ({ nativeEvent }) => {
+    this.setState({ width: nativeEvent.layout.width });
+  };
+
   render() {
     const rowStyle = [styles.row];
     if (this.props.index === 0) {
       rowStyle.push(styles.borderTop);
     }
+
+    const percentage = this.props.answerResponses / this.props.totalResponses;
+    const rowWidth = Math.floor(this.state.width * percentage);
 
     return (
       <TouchableOpacity
@@ -59,13 +66,18 @@ export default class QuestionRow extends React.Component {
           >
             {this.props.answer}
           </Text>
-          <View style={getAnswerRowStyles(this.props.answered)}>
+          <View
+            style={getAnswerRowStyles(this.props.answered)}
+            onLayout={this.handleOnLayout}
+          >
             <View
-              style={getOverlayStyles(
-                this.props.isCorrectAnswer,
-                this.props.wasUserAnswer,
-                this.props.answered
-              )}
+              style={[
+                getOverlayStyles(
+                  this.props.isCorrectAnswer,
+                  this.props.wasUserAnswer
+                ),
+                this.props.answered && { width: rowWidth }
+              ]}
             />
             {this.props.answered && (
               <Text style={styles.answerRowText}>
