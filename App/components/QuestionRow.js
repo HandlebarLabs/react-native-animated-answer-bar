@@ -1,6 +1,14 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
+const getAnswerRowStyles = answered => {
+  const s = [styles.answerRow];
+  if (answered) {
+    s.push(styles.answerRowFilled);
+  }
+  return s;
+};
+
 export default class QuestionRow extends React.Component {
   static defaultProps = {
     index: 0,
@@ -33,7 +41,7 @@ export default class QuestionRow extends React.Component {
           >
             {this.props.answer}
           </Text>
-          <View style={styles.answerRow}>
+          <View style={getAnswerRowStyles(this.props.answered)}>
             {this.props.answered && (
               <Text style={styles.answerRowText}>
                 {this.props.answerResponses}/{this.props.totalResponses}
@@ -66,6 +74,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "center",
     paddingHorizontal: 10
+  },
+  answerRowFilled: {
+    backgroundColor: "#F5F4F6"
   },
   answerRowText: {
     fontSize: 20,
