@@ -83,6 +83,7 @@ export default class App extends React.Component {
                 wasUserAnswer={wasUserAnswer}
                 answerResponses={answer.answerCount}
                 totalResponses={question.totalResponses}
+                isCorrectAnswer={answer.correct}
               />
             );
           })}

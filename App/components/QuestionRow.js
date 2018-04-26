@@ -9,6 +9,23 @@ const getAnswerRowStyles = answered => {
   return s;
 };
 
+const getOverlayStyles = (isCorrectAnswer, wasUserAnswer, answered) => {
+  const s = [styles.answerBar];
+  if (isCorrectAnswer) {
+    s.push(styles.answerBarCorrect);
+  } else if (wasUserAnswer) {
+    s.push(styles.answerBarWrong);
+  } else {
+    s.push(styles.answerBarNeutral);
+  }
+
+  if (answered) {
+    s.push({ width: 100 });
+  }
+
+  return s;
+};
+
 export default class QuestionRow extends React.Component {
   static defaultProps = {
     index: 0,
@@ -17,7 +34,8 @@ export default class QuestionRow extends React.Component {
     wasUserAnswer: false,
     answer: null,
     answerResponses: 0,
-    totalResponses: 0
+    totalResponses: 0,
+    isCorrectAnswer: false
   };
 
   render() {
@@ -42,6 +60,13 @@ export default class QuestionRow extends React.Component {
             {this.props.answer}
           </Text>
           <View style={getAnswerRowStyles(this.props.answered)}>
+            <View
+              style={getOverlayStyles(
+                this.props.isCorrectAnswer,
+                this.props.wasUserAnswer,
+                this.props.answered
+              )}
+            />
             {this.props.answered && (
               <Text style={styles.answerRowText}>
                 {this.props.answerResponses}/{this.props.totalResponses}
@@ -93,5 +118,22 @@ const styles = StyleSheet.create({
   },
   answerBoldText: {
     fontFamily: "quicksand-bold"
+  },
+  answerBar: {
+    borderRadius: 15,
+    marginVertical: 0,
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0
+  },
+  answerBarCorrect: {
+    backgroundColor: "#BAE4CF"
+  },
+  answerBarWrong: {
+    backgroundColor: "#F0C6D5"
+  },
+  answerBarNeutral: {
+    backgroundColor: "#D8D8D8"
   }
 });
