@@ -61,11 +61,7 @@ const styles = StyleSheet.create({
     borderColor: "#F5F4F6"
   },
   answerRow: {
-    height: 30,
-    borderRadius: 15,
-    alignItems: "flex-end",
-    justifyContent: "center",
-    paddingHorizontal: 10
+    height: 30
   },
   answerRowText: {
     fontSize: 20,
