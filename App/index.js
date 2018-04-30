@@ -4,6 +4,7 @@ import { Font } from "expo";
 
 import Container from "./components/Container";
 import Card from "./components/Card";
+import QuestionRow from "./components/QuestionRow";
 
 import data from "./data";
 
@@ -73,9 +74,16 @@ export default class App extends React.Component {
             }
 
             return (
-              <Text key={answer.answer} style={styles.answerText}>
-                {answer.answer}
-              </Text>
+              <QuestionRow
+                key={answer.answer}
+                index={index}
+                answer={answer.answer}
+                answered={answered}
+                onPress={() => this.handleAnswer(answer)}
+                wasUserAnswer={wasUserAnswer}
+                answerResponses={answer.answerCount}
+                totalResponses={question.totalResponses}
+              />
             );
           })}
         </Card>
@@ -90,12 +98,5 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: "quicksand-light",
     color: "#4A4A4A"
-  },
-  answerText: {
-    marginBottom: 6,
-    fontSize: 20,
-    lineHeight: 25,
-    color: "#4A4A4A",
-    fontFamily: "quicksand-regular"
   }
 });
