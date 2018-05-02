@@ -102,9 +102,9 @@ export default class QuestionRow extends React.Component {
                   width,
                   transform: [
                     {
-                      translateX: this._animatedWidth.interpolate({
+                      scaleX: this._animatedWidth.interpolate({
                         inputRange: [0, 1],
-                        outputRange: [-75, 0]
+                        outputRange: [0, 1]
                       })
                     }
                   ]
