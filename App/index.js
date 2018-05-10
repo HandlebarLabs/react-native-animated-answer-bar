@@ -8,19 +8,6 @@ import QuestionRow from "./components/QuestionRow";
 
 import data from "./data";
 
-const slowItDown = () => {
-  let j = 0;
-  const interval = setInterval(() => {
-    for (let i = 0; i < 1000; i++) {
-      console.log("slooowww", i);
-    }
-    if (j > 10) {
-      clearInterval(interval);
-    }
-    j++;
-  }, 100);
-};
-
 export const loadFonts = () =>
   Font.loadAsync({
     "bangers-regular": require("./assets/fonts/Bangers-Regular.ttf"),
@@ -60,7 +47,6 @@ export default class App extends React.Component {
         }
       };
     });
-    // slowItDown();
   };
 
   render() {
